@@ -8,13 +8,14 @@ RUN apt-get update && apt-get install -y \
     gnupg \
     unzip \
     curl \
+    ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
-# Chrome 설치
-RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
-    && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list \
+# Chrome 설치 (새로운 방식)
+RUN wget -q -O /tmp/chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
     && apt-get update \
-    && apt-get install -y google-chrome-stable \
+    && apt-get install -y /tmp/chrome.deb \
+    && rm /tmp/chrome.deb \
     && rm -rf /var/lib/apt/lists/*
 
 # Python 의존성
