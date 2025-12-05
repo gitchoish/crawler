@@ -1,0 +1,16 @@
+# Render.com 배포 설정
+
+services:
+  # Backend API
+  - type: web
+    name: naver-review-crawler-api
+    env: docker
+    dockerfilePath: ./api/Dockerfile
+    dockerContext: .
+    envVars:
+      - key: API_HOST
+        value: 0.0.0.0
+      - key: API_PORT
+        value: 10000
+      - key: ALLOWED_ORIGINS
+        value: https://your-vercel-app.vercel.app
