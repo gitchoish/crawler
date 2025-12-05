@@ -37,9 +37,12 @@ COPY api/ ./api/
 
 # Frontend 빌드 결과물 복사
 COPY --from=frontend-builder /app/frontend/.next ./frontend/.next
-COPY --from=frontend-builder /app/frontend/public ./frontend/public
 COPY --from=frontend-builder /app/frontend/package*.json ./frontend/
 COPY --from=frontend-builder /app/frontend/next.config.js ./frontend/
+
+# public 폴더 복사 (있으면)
+COPY frontend/public ./frontend/public
+
 RUN cd frontend && npm install --production
 
 # downloads 디렉토리
