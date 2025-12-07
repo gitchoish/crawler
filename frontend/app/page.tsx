@@ -119,6 +119,29 @@ export default function Home() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-12">
                 {/* 왼쪽: 입력 폼 및 진행상태 */}
                 <div className="lg:col-span-2 space-y-8">
+                    {/* 프리미엄 기능 배너 (위치 이동 및 가로형 디자인 적용) */}
+                    <div className="card border-l-4 border-l-naver-green bg-gradient-to-r from-gray-50 to-white">
+                        <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+                            <Sparkles className="w-5 h-5 text-naver-green" />
+                            프리미엄 기능 무료 제공
+                        </h3>
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                            {[
+                                "평점별 정밀 필터링",
+                                "대용량 수집 (최대 1000개)",
+                                "자동 태그 추출",
+                                "데이터 정제",
+                                "사진/텍스트 구분",
+                                "Excel/CSV 호환"
+                            ].map((feature, idx) => (
+                                <div key={idx} className="flex items-center gap-2 text-sm text-gray-600">
+                                    <div className="w-1.5 h-1.5 rounded-full bg-naver-green flex-shrink-0"></div>
+                                    {feature}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
                     {!taskId ? (
                         <CrawlerForm onSubmit={handleStartCrawl} isLoading={isLoading} />
                     ) : (
@@ -185,25 +208,6 @@ export default function Home() {
                 {/* 오른쪽: 사이드바 */}
                 <div className="lg:col-span-1 space-y-8">
                     <SidebarAd />
-
-                    {/* 기능 소개 카드 */}
-                    <div className="card border-t-4 border-t-naver-green">
-                        <h3 className="text-lg font-bold text-gray-800 mb-4">✨ 프리미엄 기능 무료</h3>
-                        <ul className="space-y-4">
-                            {[
-                                "평점별 정밀 필터링",
-                                "대용량 데이터 수집 (최대 1000개)",
-                                "자동 태그 추출 및 데이터 정제",
-                                "사진/텍스트 리뷰 구분",
-                                "Excel/CSV 호환 포맷"
-                            ].map((feature, idx) => (
-                                <li key={idx} className="flex items-center gap-3 text-sm text-gray-600">
-                                    <div className="w-1.5 h-1.5 rounded-full bg-naver-green"></div>
-                                    {feature}
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
                 </div>
             </div>
         </div>
