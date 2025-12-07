@@ -38,7 +38,7 @@ export default function AdSenseAd({
             <ins
                 className="adsbygoogle"
                 style={style}
-                data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" // TODO: 실제 AdSense ID로 교체
+                data-ad-client="ca-pub-7686325833774925"
                 data-ad-slot={slot}
                 data-ad-format={format}
                 data-full-width-responsive={responsive.toString()}
