@@ -40,7 +40,11 @@ async def start_crawl(request: CrawlRequest, background_tasks: BackgroundTasks):
         )
     
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        import traceback
+        import sys
+        print("Error in start_crawl:", file=sys.stderr)
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=f"Internal Server Error: {str(e)}")
 
 
 @router.get("/status/{task_id}", response_model=TaskStatusResponse)
