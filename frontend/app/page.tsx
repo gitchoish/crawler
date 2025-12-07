@@ -104,9 +104,6 @@ export default function Home() {
 
                 <div className="flex flex-wrap justify-center gap-4 text-sm font-medium text-gray-500 mt-8">
                     <span className="px-4 py-2 bg-white rounded-full shadow-sm border border-gray-100 flex items-center gap-2">
-                        ⚡ 1분 수집 완료
-                    </span>
-                    <span className="px-4 py-2 bg-white rounded-full shadow-sm border border-gray-100 flex items-center gap-2">
                         🎯 정밀 필터링
                     </span>
                     <span className="px-4 py-2 bg-white rounded-full shadow-sm border border-gray-100 flex items-center gap-2">
