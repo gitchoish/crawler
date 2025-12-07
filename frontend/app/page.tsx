@@ -5,7 +5,6 @@ import { Sparkles } from 'lucide-react';
 import CrawlerForm from '@/components/CrawlerForm';
 import ProgressTracker from '@/components/ProgressTracker';
 import ResultDownload from '@/components/ResultDownload';
-import { TopBannerAd, SidebarAd, InFeedAd } from '@/components/AdSenseAd';
 import { api, TaskStatus } from '@/lib/api';
 import toast from 'react-hot-toast';
 
@@ -112,9 +111,6 @@ export default function Home() {
                 </div>
             </div>
 
-            {/* 상단 배너 광고 */}
-            <TopBannerAd />
-
             {/* 메인 컨텐츠 */}
             <div className="max-w-4xl mx-auto mt-12 space-y-8">
                 {/* 프리미엄 기능 배너 */}
@@ -147,9 +143,6 @@ export default function Home() {
                         {taskStatus && (
                             <ProgressTracker taskId={taskId} status={taskStatus} />
                         )}
-
-                        {/* 인피드 광고 */}
-                        {taskStatus?.status === 'processing' && <InFeedAd />}
 
                         {taskStatus?.status === 'completed' && (
                             <div className="space-y-4">
@@ -200,11 +193,6 @@ export default function Home() {
                             </div>
                         ))}
                     </div>
-                </div>
-
-                {/* 하단 광고 (기존 사이드바 광고 이동) */}
-                <div className="flex justify-center pt-8">
-                    <SidebarAd />
                 </div>
             </div>
         </div>
