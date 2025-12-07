@@ -52,6 +52,14 @@ class NaverSmartStoreReviewCrawler:
         options.add_argument('--disable-images')
         options.add_argument('--blink-settings=imagesEnabled=false')
         
+        # Memory Optimization for Render Free Tier
+        options.add_argument('--disable-software-rasterizer')
+        options.add_argument('--disable-notifications')
+        options.add_argument('--mute-audio')
+        options.add_argument('--disable-infobars')
+        options.add_argument('--disable-popup-blocking')
+        options.page_load_strategy = 'eager'  # Wait for DOMContentLoaded only, not full load
+        
         try:
             # 방법 1: Selenium 4의 자동 드라이버 관리 사용
             self.driver = webdriver.Chrome(options=options)
