@@ -116,97 +116,94 @@ export default function Home() {
             <TopBannerAd />
 
             {/* 메인 컨텐츠 */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-12">
-                {/* 왼쪽: 입력 폼 및 진행상태 */}
-                <div className="lg:col-span-2 space-y-8">
-                    {/* 프리미엄 기능 배너 (위치 이동 및 가로형 디자인 적용) */}
-                    <div className="card border-l-4 border-l-naver-green bg-gradient-to-r from-gray-50 to-white">
-                        <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
-                            <Sparkles className="w-5 h-5 text-naver-green" />
-                            프리미엄 기능 무료 제공
-                        </h3>
-                        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                            {[
-                                "평점별 정밀 필터링",
-                                "대용량 수집 (최대 1000개)",
-                                "자동 태그 추출",
-                                "데이터 정제",
-                                "사진/텍스트 구분",
-                                "Excel/CSV 호환"
-                            ].map((feature, idx) => (
-                                <div key={idx} className="flex items-center gap-2 text-sm text-gray-600">
-                                    <div className="w-1.5 h-1.5 rounded-full bg-naver-green flex-shrink-0"></div>
-                                    {feature}
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-
-                    {!taskId ? (
-                        <CrawlerForm onSubmit={handleStartCrawl} isLoading={isLoading} />
-                    ) : (
-                        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                            {taskStatus && (
-                                <ProgressTracker taskId={taskId} status={taskStatus} />
-                            )}
-
-                            {/* 인피드 광고 */}
-                            {taskStatus?.status === 'processing' && <InFeedAd />}
-
-                            {taskStatus?.status === 'completed' && (
-                                <div className="space-y-4">
-                                    <ResultDownload
-                                        taskId={taskId}
-                                        collectedCount={taskStatus.collected_count}
-                                    />
-
-                                    <button
-                                        onClick={handleReset}
-                                        className="w-full py-4 px-6 bg-white border-2 border-dashed border-gray-300 text-gray-500 rounded-xl hover:border-naver-green hover:text-naver-green hover:bg-green-50 transition-all duration-200 font-medium flex items-center justify-center gap-2 group"
-                                    >
-                                        <Sparkles className="w-5 h-5 group-hover:animate-pulse" />
-                                        새로운 크롤링 시작하기
-                                    </button>
-                                </div>
-                            )}
-
-                            {taskStatus?.status === 'failed' && (
-                                <button
-                                    onClick={handleReset}
-                                    className="w-full py-4 px-6 bg-red-50 text-red-600 rounded-xl hover:bg-red-100 transition-all duration-200 font-medium border border-red-100"
-                                >
-                                    다시 시도하기
-                                </button>
-                            )}
-                        </div>
-                    )}
-
-                    {/* 사용 가이드 (카드 디자인 개선) */}
-                    <div className="card bg-gradient-to-br from-white to-gray-50">
-                        <h3 className="text-lg font-bold text-gray-800 mb-6 flex items-center gap-2">
-                            <span className="w-1 h-6 bg-naver-green rounded-full"></span>
-                            간편 사용 가이드
-                        </h3>
-                        <div className="grid gap-4">
-                            {[
-                                { step: 1, text: "네이버 브랜드스토어 제품 상세 URL을 복사하세요." },
-                                { step: 2, text: "원하는 평점(1~5점)과 수집할 리뷰 개수를 설정하세요." },
-                                { step: 3, text: "'크롤링 시작' 버튼을 누르고 잠시만 기다려주세요." },
-                                { step: 4, text: "분석된 데이터를 Excel 또는 CSV로 다운로드하세요." }
-                            ].map((item) => (
-                                <div key={item.step} className="flex items-start gap-4 p-3 rounded-lg hover:bg-white transition-colors">
-                                    <span className="flex-shrink-0 w-8 h-8 bg-naver-green/10 text-naver-green rounded-full flex items-center justify-center font-bold text-sm">
-                                        {item.step}
-                                    </span>
-                                    <span className="text-gray-600 text-sm mt-1.5 font-medium">{item.text}</span>
-                                </div>
-                            ))}
-                        </div>
+            <div className="max-w-4xl mx-auto mt-12 space-y-8">
+                {/* 프리미엄 기능 배너 */}
+                <div className="card border-l-4 border-l-naver-green bg-gradient-to-r from-gray-50 to-white">
+                    <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+                        <Sparkles className="w-5 h-5 text-naver-green" />
+                        프리미엄 기능 무료 제공
+                    </h3>
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        {[
+                            "평점별 정밀 필터링",
+                            "대용량 수집 (최대 1000개)",
+                            "자동 태그 추출",
+                            "데이터 정제",
+                            "사진/텍스트 구분",
+                            "Excel/CSV 호환"
+                        ].map((feature, idx) => (
+                            <div key={idx} className="flex items-center gap-2 text-sm text-gray-600">
+                                <div className="w-1.5 h-1.5 rounded-full bg-naver-green flex-shrink-0"></div>
+                                {feature}
+                            </div>
+                        ))}
                     </div>
                 </div>
 
-                {/* 오른쪽: 사이드바 */}
-                <div className="lg:col-span-1 space-y-8">
+                {!taskId ? (
+                    <CrawlerForm onSubmit={handleStartCrawl} isLoading={isLoading} />
+                ) : (
+                    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                        {taskStatus && (
+                            <ProgressTracker taskId={taskId} status={taskStatus} />
+                        )}
+
+                        {/* 인피드 광고 */}
+                        {taskStatus?.status === 'processing' && <InFeedAd />}
+
+                        {taskStatus?.status === 'completed' && (
+                            <div className="space-y-4">
+                                <ResultDownload
+                                    taskId={taskId}
+                                    collectedCount={taskStatus.collected_count}
+                                />
+
+                                <button
+                                    onClick={handleReset}
+                                    className="w-full py-4 px-6 bg-white border-2 border-dashed border-gray-300 text-gray-500 rounded-xl hover:border-naver-green hover:text-naver-green hover:bg-green-50 transition-all duration-200 font-medium flex items-center justify-center gap-2 group"
+                                >
+                                    <Sparkles className="w-5 h-5 group-hover:animate-pulse" />
+                                    새로운 크롤링 시작하기
+                                </button>
+                            </div>
+                        )}
+
+                        {taskStatus?.status === 'failed' && (
+                            <button
+                                onClick={handleReset}
+                                className="w-full py-4 px-6 bg-red-50 text-red-600 rounded-xl hover:bg-red-100 transition-all duration-200 font-medium border border-red-100"
+                            >
+                                다시 시도하기
+                            </button>
+                        )}
+                    </div>
+                )}
+
+                {/* 사용 가이드 */}
+                <div className="card bg-gradient-to-br from-white to-gray-50">
+                    <h3 className="text-lg font-bold text-gray-800 mb-6 flex items-center gap-2">
+                        <span className="w-1 h-6 bg-naver-green rounded-full"></span>
+                        간편 사용 가이드
+                    </h3>
+                    <div className="grid gap-4">
+                        {[
+                            { step: 1, text: "네이버 브랜드스토어 제품 상세 URL을 복사하세요." },
+                            { step: 2, text: "원하는 평점(1~5점)과 수집할 리뷰 개수를 설정하세요." },
+                            { step: 3, text: "'크롤링 시작' 버튼을 누르고 잠시만 기다려주세요." },
+                            { step: 4, text: "분석된 데이터를 Excel 또는 CSV로 다운로드하세요." }
+                        ].map((item) => (
+                            <div key={item.step} className="flex items-start gap-4 p-3 rounded-lg hover:bg-white transition-colors">
+                                <span className="flex-shrink-0 w-8 h-8 bg-naver-green/10 text-naver-green rounded-full flex items-center justify-center font-bold text-sm">
+                                    {item.step}
+                                </span>
+                                <span className="text-gray-600 text-sm mt-1.5 font-medium">{item.text}</span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* 하단 광고 (기존 사이드바 광고 이동) */}
+                <div className="flex justify-center pt-8">
                     <SidebarAd />
                 </div>
             </div>
