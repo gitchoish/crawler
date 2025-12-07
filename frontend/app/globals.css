@@ -2,30 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  body {
-    @apply bg-gradient-to-br from-slate-50 via-green-50 to-emerald-50 min-h-screen;
-  }
+:root {
+  --naver-green: #03C75A;
+  --naver-dark: #02b04f;
+}
+
+body {
+  background: #F8F9FA;
+  min-height: 100vh;
 }
 
 @layer components {
   .glass-effect {
     @apply bg-white/80 backdrop-blur-lg border border-white/20 shadow-xl;
   }
-  
+
   .btn-primary {
-    @apply bg-gradient-to-r from-naver-green to-naver-dark text-white font-semibold py-3 px-8 rounded-xl 
-           hover:shadow-lg hover:scale-105 transition-all duration-300 
-           disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100;
+    @apply bg-gradient-to-r from-green-500 to-emerald-600 text-white font-semibold py-3 px-8 rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100;
   }
-  
+
   .input-field {
-    @apply w-full px-4 py-3 rounded-lg border-2 border-gray-200 
-           focus:border-naver-green focus:ring-2 focus:ring-naver-green/20 
-           transition-all duration-200 outline-none;
+    @apply w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all duration-200 outline-none;
   }
-  
+
   .card {
-    @apply glass-effect rounded-2xl p-6 hover:shadow-2xl transition-all duration-300;
+    @apply bg-white rounded-2xl p-6 shadow-sm border border-gray-100 transition-all duration-300 hover:shadow-md;
   }
 }

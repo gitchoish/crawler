@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { Sparkles, Github, Heart } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 import CrawlerForm from '@/components/CrawlerForm';
 import ProgressTracker from '@/components/ProgressTracker';
 import ResultDownload from '@/components/ResultDownload';
@@ -88,147 +88,126 @@ export default function Home() {
     };
 
     return (
-        <div className="min-h-screen py-8 px-4">
-            <div className="max-w-7xl mx-auto">
-                {/* 헤더 */}
-                <header className="text-center mb-12">
-                    <div className="inline-flex items-center gap-2 mb-4">
-                        <Sparkles className="w-10 h-10 text-naver-green" />
-                        <h1 className="text-5xl font-bold bg-gradient-to-r from-naver-green to-naver-dark bg-clip-text text-transparent">
-                            네이버 리뷰 크롤러
-                        </h1>
-                    </div>
-                    <p className="text-xl text-gray-600 mb-6">
-                        브랜드스토어 리뷰를 쉽고 빠르게 수집하세요
-                    </p>
-                    <div className="flex items-center justify-center gap-6 text-sm text-gray-500">
-                        <span className="flex items-center gap-1">
-                            ⚡ 빠른 수집
-                        </span>
-                        <span className="flex items-center gap-1">
-                            🎯 평점 필터링
-                        </span>
-                        <span className="flex items-center gap-1">
-                            📊 Excel/CSV 지원
-                        </span>
-                    </div>
-                </header>
+        <div className="max-w-7xl mx-auto px-4 py-12">
+            {/* 헤더 섹션 (Hero) */}
+            <div className="text-center mb-16 space-y-6">
+                <div className="inline-flex items-center justify-center p-3 bg-green-50 rounded-2xl mb-2">
+                    <Sparkles className="w-8 h-8 text-naver-green" />
+                </div>
+                <h1 className="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight">
+                    네이버 브랜드스토어 <span className="text-naver-green">리뷰 분석</span>
+                </h1>
+                <p className="text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed">
+                    복잡한 리뷰 데이터를 한 번에 수집하고 분석하세요.<br className="hidden md:block" />
+                    마케터와 셀러를 위한 가장 스마트한 도구입니다.
+                </p>
 
-                {/* 상단 배너 광고 */}
-                <TopBannerAd />
+                <div className="flex flex-wrap justify-center gap-4 text-sm font-medium text-gray-500 mt-8">
+                    <span className="px-4 py-2 bg-white rounded-full shadow-sm border border-gray-100 flex items-center gap-2">
+                        ⚡ 1분 수집 완료
+                    </span>
+                    <span className="px-4 py-2 bg-white rounded-full shadow-sm border border-gray-100 flex items-center gap-2">
+                        🎯 정밀 필터링
+                    </span>
+                    <span className="px-4 py-2 bg-white rounded-full shadow-sm border border-gray-100 flex items-center gap-2">
+                        💾 Excel/CSV 다운로드
+                    </span>
+                </div>
+            </div>
 
-                {/* 메인 컨텐츠 */}
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    {/* 왼쪽: 입력 폼 */}
-                    <div className="lg:col-span-2 space-y-6">
-                        {!taskId ? (
-                            <CrawlerForm onSubmit={handleStartCrawl} isLoading={isLoading} />
-                        ) : (
-                            <>
-                                {taskStatus && (
-                                    <ProgressTracker taskId={taskId} status={taskStatus} />
-                                )}
+            {/* 상단 배너 광고 */}
+            <TopBannerAd />
 
-                                {/* 인피드 광고 */}
-                                {taskStatus?.status === 'processing' && <InFeedAd />}
+            {/* 메인 컨텐츠 */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-12">
+                {/* 왼쪽: 입력 폼 및 진행상태 */}
+                <div className="lg:col-span-2 space-y-8">
+                    {!taskId ? (
+                        <CrawlerForm onSubmit={handleStartCrawl} isLoading={isLoading} />
+                    ) : (
+                        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                            {taskStatus && (
+                                <ProgressTracker taskId={taskId} status={taskStatus} />
+                            )}
 
-                                {taskStatus?.status === 'completed' && (
-                                    <>
-                                        <ResultDownload
-                                            taskId={taskId}
-                                            collectedCount={taskStatus.collected_count}
-                                        />
+                            {/* 인피드 광고 */}
+                            {taskStatus?.status === 'processing' && <InFeedAd />}
 
-                                        <button
-                                            onClick={handleReset}
-                                            className="w-full py-3 px-6 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-all duration-200 font-medium"
-                                        >
-                                            🔄 새로운 크롤링 시작
-                                        </button>
-                                    </>
-                                )}
+                            {taskStatus?.status === 'completed' && (
+                                <div className="space-y-4">
+                                    <ResultDownload
+                                        taskId={taskId}
+                                        collectedCount={taskStatus.collected_count}
+                                    />
 
-                                {taskStatus?.status === 'failed' && (
                                     <button
                                         onClick={handleReset}
-                                        className="w-full py-3 px-6 bg-red-100 text-red-700 rounded-xl hover:bg-red-200 transition-all duration-200 font-medium"
+                                        className="w-full py-4 px-6 bg-white border-2 border-dashed border-gray-300 text-gray-500 rounded-xl hover:border-naver-green hover:text-naver-green hover:bg-green-50 transition-all duration-200 font-medium flex items-center justify-center gap-2 group"
                                     >
-                                        🔄 다시 시도
+                                        <Sparkles className="w-5 h-5 group-hover:animate-pulse" />
+                                        새로운 크롤링 시작하기
                                     </button>
-                                )}
-                            </>
-                        )}
+                                </div>
+                            )}
 
-                        {/* 사용 가이드 */}
-                        <div className="card">
-                            <h3 className="text-lg font-bold text-gray-800 mb-4">📖 사용 방법</h3>
-                            <ol className="space-y-3 text-sm text-gray-600">
-                                <li className="flex gap-3">
-                                    <span className="flex-shrink-0 w-6 h-6 bg-naver-green text-white rounded-full flex items-center justify-center text-xs font-bold">1</span>
-                                    <span>네이버 브랜드스토어 제품 페이지 URL을 복사합니다</span>
-                                </li>
-                                <li className="flex gap-3">
-                                    <span className="flex-shrink-0 w-6 h-6 bg-naver-green text-white rounded-full flex items-center justify-center text-xs font-bold">2</span>
-                                    <span>원하는 평점과 리뷰 개수를 선택합니다</span>
-                                </li>
-                                <li className="flex gap-3">
-                                    <span className="flex-shrink-0 w-6 h-6 bg-naver-green text-white rounded-full flex items-center justify-center text-xs font-bold">3</span>
-                                    <span>크롤링 시작 버튼을 클릭하고 잠시 기다립니다</span>
-                                </li>
-                                <li className="flex gap-3">
-                                    <span className="flex-shrink-0 w-6 h-6 bg-naver-green text-white rounded-full flex items-center justify-center text-xs font-bold">4</span>
-                                    <span>완료되면 Excel 또는 CSV 파일을 다운로드합니다</span>
-                                </li>
-                            </ol>
+                            {taskStatus?.status === 'failed' && (
+                                <button
+                                    onClick={handleReset}
+                                    className="w-full py-4 px-6 bg-red-50 text-red-600 rounded-xl hover:bg-red-100 transition-all duration-200 font-medium border border-red-100"
+                                >
+                                    다시 시도하기
+                                </button>
+                            )}
                         </div>
-                    </div>
+                    )}
 
-                    {/* 오른쪽: 사이드바 광고 */}
-                    <div className="lg:col-span-1">
-                        <div className="sticky top-8 space-y-6">
-                            <SidebarAd />
-
-                            {/* 정보 카드 */}
-                            <div className="card">
-                                <h3 className="text-lg font-bold text-gray-800 mb-4">💡 주요 기능</h3>
-                                <ul className="space-y-3 text-sm text-gray-600">
-                                    <li className="flex items-start gap-2">
-                                        <span className="text-green-500 mt-0.5">✓</span>
-                                        <span>평점별 필터링 (1~5점)</span>
-                                    </li>
-                                    <li className="flex items-start gap-2">
-                                        <span className="text-green-500 mt-0.5">✓</span>
-                                        <span>최대 1000개 리뷰 수집</span>
-                                    </li>
-                                    <li className="flex items-start gap-2">
-                                        <span className="text-green-500 mt-0.5">✓</span>
-                                        <span>Excel/CSV 형식 지원</span>
-                                    </li>
-                                    <li className="flex items-start gap-2">
-                                        <span className="text-green-500 mt-0.5">✓</span>
-                                        <span>사진 리뷰 구분</span>
-                                    </li>
-                                    <li className="flex items-start gap-2">
-                                        <span className="text-green-500 mt-0.5">✓</span>
-                                        <span>태그 자동 추출</span>
-                                    </li>
-                                </ul>
-                            </div>
+                    {/* 사용 가이드 (카드 디자인 개선) */}
+                    <div className="card bg-gradient-to-br from-white to-gray-50">
+                        <h3 className="text-lg font-bold text-gray-800 mb-6 flex items-center gap-2">
+                            <span className="w-1 h-6 bg-naver-green rounded-full"></span>
+                            간편 사용 가이드
+                        </h3>
+                        <div className="grid gap-4">
+                            {[
+                                { step: 1, text: "네이버 브랜드스토어 제품 상세 URL을 복사하세요." },
+                                { step: 2, text: "원하는 평점(1~5점)과 수집할 리뷰 개수를 설정하세요." },
+                                { step: 3, text: "'크롤링 시작' 버튼을 누르고 잠시만 기다려주세요." },
+                                { step: 4, text: "분석된 데이터를 Excel 또는 CSV로 다운로드하세요." }
+                            ].map((item) => (
+                                <div key={item.step} className="flex items-start gap-4 p-3 rounded-lg hover:bg-white transition-colors">
+                                    <span className="flex-shrink-0 w-8 h-8 bg-naver-green/10 text-naver-green rounded-full flex items-center justify-center font-bold text-sm">
+                                        {item.step}
+                                    </span>
+                                    <span className="text-gray-600 text-sm mt-1.5 font-medium">{item.text}</span>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>
 
-                {/* 푸터 */}
-                <footer className="mt-16 text-center text-gray-500 text-sm">
-                    <div className="flex items-center justify-center gap-2 mb-2">
-                        <span>Made with</span>
-                        <Heart className="w-4 h-4 text-red-500 fill-red-500" />
-                        <span>by Naver Review Crawler</span>
+                {/* 오른쪽: 사이드바 */}
+                <div className="lg:col-span-1 space-y-8">
+                    <SidebarAd />
+
+                    {/* 기능 소개 카드 */}
+                    <div className="card border-t-4 border-t-naver-green">
+                        <h3 className="text-lg font-bold text-gray-800 mb-4">✨ 프리미엄 기능 무료</h3>
+                        <ul className="space-y-4">
+                            {[
+                                "평점별 정밀 필터링",
+                                "대용량 데이터 수집 (최대 1000개)",
+                                "자동 태그 추출 및 데이터 정제",
+                                "사진/텍스트 리뷰 구분",
+                                "Excel/CSV 호환 포맷"
+                            ].map((feature, idx) => (
+                                <li key={idx} className="flex items-center gap-3 text-sm text-gray-600">
+                                    <div className="w-1.5 h-1.5 rounded-full bg-naver-green"></div>
+                                    {feature}
+                                </li>
+                            ))}
+                        </ul>
                     </div>
-                    <p className="text-xs">
-                        이 도구는 개인적인 용도로만 사용하세요. 과도한 크롤링은 서비스 이용이 제한될 수 있습니다.
-                    </p>
-                </footer>
+                </div>
             </div>
         </div>
     );

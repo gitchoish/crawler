@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from 'react-hot-toast';
 import Script from 'next/script';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -47,8 +49,12 @@ export default function RootLayout({
           `}
                 </Script>
             </head>
-            <body className={inter.className}>
-                {children}
+            <body className={`${inter.className} min-h-screen flex flex-col bg-[#F8F9FA]`}>
+                <Header />
+                <main className="flex-grow">
+                    {children}
+                </main>
+                <Footer />
                 <Toaster
                     position="top-right"
                     toastOptions={{
